@@ -1,16 +1,13 @@
 import { SPANISH_FREQUENCIES } from './frequencies'
 
-// Vocales acentuadas se comparan como su vocal base: no tenemos (ni
-// necesitamos) una frecuencia propia para "e" vs "e" acentuada, es la misma
-// letra para efectos estadisticos aunque el cifrado las trate como simbolos
-// distintos.
-const ACCENT_TO_BASE: Record<string, string> = {
-  Á: 'A', É: 'E', Í: 'I', Ó: 'O', Ú: 'U', Ü: 'U',
-  á: 'A', é: 'E', í: 'I', ó: 'O', ú: 'U', ü: 'U',
-}
-
+// Las vocales acentuadas NO se fusionan con su vocal base. Se probo (ver
+// EncryptLab - Robustez y Casos Limite) y abre un hueco: un candidato basura
+// cargado de acentos se "disfraza" de texto normal porque hereda la
+// frecuencia completa de la vocal base, mucho mas alta de lo real. Una
+// acentuada sin cobertura propia cae en el mismo bucket que un digito o
+// simbolo ajeno - resta cobertura, no corrompe el chi-cuadrado.
 function referenceKey(char: string): string {
-  return (ACCENT_TO_BASE[char] ?? char).toUpperCase()
+  return char.toUpperCase()
 }
 
 export interface ScoreResult {
