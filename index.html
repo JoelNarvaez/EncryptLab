@@ -5,9 +5,17 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>encryptlab-scaffold</title>
+    <script>
+      // Aplica el tema guardado antes del primer pintado, para no mostrar un
+      // flash del tema equivocado. Claro es el default; solo se queda en
+      // oscuro si el usuario lo eligio explicitamente antes.
+      if (localStorage.getItem('encryptlab-tema') !== 'oscuro') {
+        document.documentElement.dataset.theme = 'claro'
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/principal.tsx"></script>
   </body>
 </html>
