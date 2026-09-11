@@ -5,10 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "predev": "npm run docs",
     "build": "tsc -b && vite build",
-    "prebuild": "npm run docs",
-    "docs": "node scripts/generate-docs.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run"
