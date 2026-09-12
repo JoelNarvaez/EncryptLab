@@ -1,32 +1,29 @@
-# React + TypeScript + Vite
+# EncryptLab
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Programa web que cifra y descifra texto con los métodos **César** y **Atbash**, sobre un alfabeto configurable por el usuario (ASCII completo, un preset en español, o un conjunto propio).
 
-Currently, two official plugins are available:
+Lo más importante: al descifrar, **el usuario no elige nada** — el sistema prueba todos los descifrados posibles y decide solo cuál es el correcto, aplicando el análisis de frecuencia que Al-Kindi describió en el siglo IX, reforzado con un diccionario de palabras y bigramas para textos cortos.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Trabajo universitario individual — UAA, materia de Seguridad.
 
-## React Compiler
+## Cómo correrlo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev       # levanta el servidor de desarrollo
+npm test          # corre los tests
+npm run build     # build de producción
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Estructura
+
+- `src/lib/` — toda la lógica pura: alfabeto, cifrado César/Atbash, y el motor de detección automática (chi-cuadrado, diccionario, bigramas).
+- `src/components/` — la interfaz (vistas de cifrar/descifrar, editor de alfabeto, gráfica de frecuencias).
+- `src/Aplicacion.tsx` / `src/principal.tsx` — punto de entrada.
+
+## Documentación
+
+El código en `src/lib` tiene comentarios numerados (`// [1]`, `// [2]`...) que apuntan a una explicación en:
+
+- [`DOCUMENTACION.md`](./DOCUMENTACION.md) — versión técnica completa.
+- [`DOCUMENTACION-SIMPLE.md`](./DOCUMENTACION-SIMPLE.md) — la misma explicación, en simple.
