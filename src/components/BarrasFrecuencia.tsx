@@ -4,12 +4,6 @@ interface PropsBarrasFrecuencia {
   observadas: Record<string, number>
 }
 
-// En vez de dos series superpuestas (barra + marca), cada letra se reduce a
-// un solo numero: cuanto se desvia su frecuencia observada de lo esperado en
-// español. Positivo = aparece mas de lo esperado, negativo = menos. Es
-// literalmente lo que el chi-cuadrado eleva al cuadrado por dentro — mostrar
-// la desviacion directamente es mas fiel a como funciona Al-Kindi que un
-// grafico de barras genrico.
 export function BarrasFrecuencia({ observadas }: PropsBarrasFrecuencia) {
   const filas = Object.keys(observadas)
     .map((letra) => {

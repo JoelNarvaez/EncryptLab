@@ -27,10 +27,10 @@ export function explicarDeteccion(resultado: ResultadoDeteccion): ExplicacionDet
 
   const razonVeredicto =
     ganador.coincidenciasDiccionario > 0
-      ? 'Detectado por palabras reales del texto.'
+      ? 'Chi-cuadrada de Al-Kindi, reforzada con palabras reales del texto.'
       : ganador.puntuacionBigrama !== null
-        ? 'Detectado por pares de letras (bigramas).'
-        : 'Detectado por frecuencia de letras.'
+        ? 'Chi-cuadrada de Al-Kindi, reforzada con pares de letras (bigramas).'
+        : 'Chi-cuadrada de Al-Kindi, sin necesitar refuerzo adicional.'
 
   const notaConfianza = {
     alta: '',

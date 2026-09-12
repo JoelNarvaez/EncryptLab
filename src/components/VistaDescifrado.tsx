@@ -34,20 +34,12 @@ export function VistaDescifrado({ alfabetoCrudo, setAlfabetoCrudo, alfabeto }: P
   const alfabetoValido = esAlfabetoValido(alfabeto)
   const explicacion = useMemo(() => (resultado ? explicarDeteccion(resultado) : null), [resultado])
 
-  // Mismo conteo que usa deteccion.ts para decidir confianza — solo cuenta
-  // caracteres que existen en el alfabeto actual, no el largo crudo del texto.
   const longitudAnalizada = useMemo(
     () => aGrafemas(textoCifrado).filter((caracter) => alfabeto.includes(caracter)).length,
     [textoCifrado, alfabeto],
   )
   const esTextoCorto = longitudAnalizada > 0 && longitudAnalizada < UMBRAL_TEXTO_CORTO
 
-  // El orden de resultado.candidatos viene de ordenarPorRefuerzos (diccionario
-  // > bigramas > chi-cuadrado), no de chi-cuadrado solo — por eso el
-  // candidato en la posicion 6 puede tener mejor chi-cuadrado que el de la
-  // posicion 2. Para esta lista, que existe para mostrar "que tan cerca
-  // quedaron los demas", se reordena por chi-cuadrado real para que la
-  // cercania visual tenga sentido.
   const otrosCandidatos = useMemo(() => {
     if (!resultado) return []
     return [...resultado.candidatos.slice(1)].sort((a, b) => a.chiCuadrado - b.chiCuadrado).slice(0, 3)
@@ -58,7 +50,6 @@ export function VistaDescifrado({ alfabetoCrudo, setAlfabetoCrudo, alfabeto }: P
     const min = finitos.length ? Math.min(...finitos) : 0
     const max = finitos.length ? Math.max(...finitos) : 1
     const rango = max - min || 1
-    // Mas cerca del ganador (chi-cuadrado mas bajo) = barra mas llena.
     return (chiCuadrado: number) => (Number.isFinite(chiCuadrado) ? (1 - (chiCuadrado - min) / rango) * 100 : 0)
   }, [otrosCandidatos])
 

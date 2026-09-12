@@ -29,9 +29,6 @@ export function EditorAlfabeto({ alfabetoCrudo, alfabeto, alCambiarAlfabetoCrudo
         <span className="el-editor-alfabeto__cantidad">{alfabeto.length} símbolos</span>
       </div>
 
-      {/* La key fuerza a React a remontar la grilla cuando cambia el
-          alfabeto, para que la animacion de entrada se repita — sensacion
-          de "baraja nueva" en vez de un cambio instantaneo y seco. */}
       <div className="el-tira-alfabeto" key={alfabeto.join('')}>
         {alfabeto.map((caracter, i) => (
           <span className="el-tira-alfabeto__ficha" key={i}>

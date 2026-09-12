@@ -17,17 +17,11 @@ function obtenerTemaInicial(): Tema {
 function Aplicacion() {
   const [modo, setModo] = useState<ModoApp>('cifrar')
   const [tema, setTema] = useState<Tema>(obtenerTemaInicial)
-  // El alfabeto vive aca, no en cada vista: es "la base de todo lo demas"
-  // (cifrar, descifrar y la deteccion automatica dependen de el), asi que
-  // configurarlo una vez tiene que servir para las dos vistas por igual.
   const [alfabetoCrudo, setAlfabetoCrudo] = useState(ALFABETO_POR_DEFECTO)
   const alfabeto = useMemo(() => normalizarAlfabeto(alfabetoCrudo), [alfabetoCrudo])
 
   useEffect(() => {
     localStorage.setItem(CLAVE_TEMA, tema)
-    // El body vive fuera de este div — sin esto, el fondo de <body> (que
-    // tambien usa var(--void)) se queda con el valor de :root porque nunca
-    // es descendiente del elemento donde se define el override de tema.
     document.documentElement.dataset.theme = tema
   }, [tema])
 
@@ -49,10 +43,6 @@ function Aplicacion() {
           <SelectorModo modo={modo} alCambiar={setModo} />
         </nav>
 
-        {/* Las dos vistas quedan montadas siempre — solo se oculta la que no
-            esta activa. Si se desmontara la que no se ve (como hacia el
-            ? : de antes), React tira todo su estado local (lo escrito, el
-            resultado, etc.) cada vez que se cambia de pestaña. */}
         <div hidden={modo !== 'cifrar'}>
           <VistaCifrado alfabetoCrudo={alfabetoCrudo} setAlfabetoCrudo={setAlfabetoCrudo} alfabeto={alfabeto} />
         </div>
