@@ -1,16 +1,4 @@
-// Frecuencias reales de bigramas (pares de letras consecutivas) en español,
-// derivadas del corpus de Leipzig (~965 millones de ocurrencias de bigramas),
-// publicadas por el proyecto engram-es-2021 (Ian Douglas / binarybottle en
-// GitHub, data/spanish-bigram-frequency-v1.ods). Es la misma idea del
-// analisis de frecuencia de Al-Kindi, extendida de letras sueltas a pares de
-// letras - mucha mas señal por caracter en textos cortos, sin necesitar
-// escribir a mano ninguna regla de que "suena a español".
-//
-// Solo cubre las 26 letras base (A-Z, sin Ñ): el corpus fuente no distingue
-// la Ñ como letra propia en esta tabla, asi que plegarParaBigrama() la
-// pliega a N antes de buscar (igual con vocales acentuadas -> su vocal
-// base). Valores en porcentaje (suman ~100 sobre las 675 combinaciones
-// observadas).
+// [16]
 export const FRECUENCIAS_BIGRAMAS_ESPANOL: Record<string, number> = {
   AA: 0.00240596,
   AB: 0.587485,
@@ -700,35 +688,16 @@ function plegarParaBigrama(caracter: string): string {
   return ACENTO_A_BASE[minuscula] ?? caracter.toUpperCase()
 }
 
-// Piso para CUALQUIER bigrama (incluso los que si estan en la tabla, no solo
-// los ausentes): sin esto, una palabra real con un solo bigrama genuinamente
-// raro (ej. "LC" en "volcán", 0.03%) dispara su -log a un numero grande y
-// pierde contra basura mas corta que por casualidad evito cualquier par
-// infrecuente - el mismo problema que la letra H en chi-cuadrado, un nivel
-// mas abajo. Probado por barrido contra la bateria completa.
 const PORC_PISO = 0.03
 
-// Un candidato con simbolos/digitos mezclados (alfabeto ASCII completo) se
-// puede fragmentar en pedazos de pocas letras, dejando menos bigramas que
-// una palabra real mas larga. Promediar sobre pocas muestras es ruidoso: un
-// fragmento corto con suerte le gana a una palabra real con mas muestras y
-// un promedio apenas mas alto. Por eso el desempate en deteccion.ts descarta
-// (trata como sin señal) cualquier candidato cuyo numero de bigramas sea
-// bastante menor al del candidato mejor cubierto del mismo cifrado - no
-// alcanza con exigir un minimo fijo, tiene que ser relativo a los demas.
 export const RATIO_COBERTURA_MINIMA_BIGRAMA = 0.85
 
 export interface EstadisticasBigrama {
-  // promedio de -log(probabilidad) por bigrama; null si no hay ninguno
   promedio: number | null
-  // cuantos pares de letras consecutivos se evaluaron
   cantidad: number
 }
 
-// Estadisticas de bigramas de `texto`: promedio de -log(probabilidad) de cada
-// par de letras consecutivas dentro de cada palabra (menor promedio = las
-// letras se combinan mas como en español real), mas cuantos pares se
-// contaron (para el filtro relativo de deteccion.ts).
+// [17]
 export function estadisticasBigrama(texto: string): EstadisticasBigrama {
   const palabras = texto.match(PATRON_PALABRA) ?? []
   let suma = 0

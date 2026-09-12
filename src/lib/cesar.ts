@@ -1,5 +1,6 @@
 import { aGrafemas } from './alfabeto'
 
+// [5]
 export function cifrarCesar(texto: string, alfabeto: string[], k: number): string {
   const n = alfabeto.length
   if (n === 0) return texto
@@ -12,12 +13,12 @@ export function cifrarCesar(texto: string, alfabeto: string[], k: number): strin
     .join('')
 }
 
+// [6]
 export function descifrarCesar(texto: string, alfabeto: string[], k: number): string {
   return cifrarCesar(texto, alfabeto, -k)
 }
 
-// Rango valido de k: 1..desplazamientoMaximo(alfabeto). k=0 no cifra nada,
-// asi que se excluye.
+// [7]
 export function desplazamientoMaximo(alfabeto: string[]): number {
   return Math.max(1, alfabeto.length - 1)
 }

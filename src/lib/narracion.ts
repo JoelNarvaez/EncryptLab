@@ -1,17 +1,10 @@
 import type { ResultadoDeteccion } from './deteccion'
 
+// [24]
 export interface ExplicacionDeteccion {
-  // "César · módulo 62" / "Atbash" / "No se pudo determinar"
   titular: string
-  // 0-100, o null si no se pudo determinar.
   porcConfianza: number | null
-  // El chi-cuadrado de Al-Kindi del candidato ganador, o null si no se pudo
-  // determinar. Se muestra junto al encabezado, sin mas detalle (margen/IC
-  // quedan fuera de la UI — son respaldo para el reporte, no para el usuario).
   chiCuadrado: number | null
-  // Una frase muy corta: nada mas el metodo de refuerzo usado (diccionario,
-  // bigramas o solo frecuencia de letras), mas una nota de confianza si
-  // aplica.
   razonamiento: string
 }
 

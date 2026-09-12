@@ -1,7 +1,6 @@
 import { aGrafemas } from './alfabeto'
 
-// Atbash es una involucion: aplicar la funcion una vez cifra, aplicarla de
-// nuevo sobre el resultado descifra. No hay clave ni modulo que elegir.
+// [8]
 export function atbash(texto: string, alfabeto: string[]): string {
   const n = alfabeto.length
   if (n === 0) return texto

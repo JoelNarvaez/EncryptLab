@@ -1,11 +1,4 @@
-// Lista de palabras comunes en español, embebida (sin librerías ni acceso a
-// internet). No es exhaustiva -ningun diccionario de unos cientos de
-// palabras cubre todo el idioma- pero cubre las palabras de uso mas
-// frecuente: articulos, pronombres, preposiciones, verbos comunes y
-// sustantivos cotidianos. Sirve como señal extra para textos cortos, donde
-// el chi-cuadrado por si solo no tiene suficiente informacion (ver
-// EncryptLab - Robustez y Casos Limite): una palabra real reconocida por su
-// forma vale mas que un patron de letras con suerte estadistica.
+// [18]
 const PALABRAS = [
   // Articulos, pronombres, preposiciones, conjunciones
   'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'lo',
@@ -120,29 +113,9 @@ export const PALABRAS_ESPANOL = new Set(PALABRAS.map((p) => p.toLowerCase()))
 
 const PATRON_PALABRA = /[a-zA-ZÁÉÍÓÚÑáéíóúñ]+/g
 
-// Palabras de 1-2 letras ("a", "ni", "de", "no"...) son riesgosas como señal
-// SI el segmento viene fragmentado en varios tokens: con puntuacion en el
-// alfabeto (ASCII completo), un candidato basura se corta en pedazos cortos
-// con mucha facilidad, y esos fragmentos coinciden con alguna de estas
-// palabras por pura casualidad casi siempre - se detecto probando "gato" y
-// "casa", que perdian contra basura que por azar se partia en trozos como
-// "a"+"ni" o "y"+"y". Pero cuando el segmento ES una sola palabra completa
-// (sin fragmentar, ej. "ok"), no hay ese riesgo de casualidad - ahi si vale
-// una coincidencia corta.
 const LONGITUD_MINIMA_COINCIDENCIA = 3
 
-// Cuenta cuantas palabras reales del español hay en `text`. Se separa
-// primero por ESPACIOS (limites de palabra de verdad), no por cualquier
-// caracter no-letra: separar por cualquier simbolo dejaba pasar basura como
-// "ao_]han]" (con el alfabeto ASCII completo, digitos/simbolos mezclados),
-// que se fragmenta en "ao" + "han" - y "han" (verbo haber) es una palabra
-// real del diccionario, así que le ganaba a una palabra genuina como
-// "escalera" por pura casualidad de fragmentacion. Si un SEGMENTO (entre
-// espacios) produce mas de un trozo de letras, es señal de que hay
-// puntuacion/simbolos rompiendolo por dentro - no es una palabra de verdad,
-// no cuenta nada de ese segmento. Los digitos pegados sin cortar el texto en
-// pedazos (ej. "piso32") si se tratan bien, porque siguen dando un solo
-// trozo de letras.
+// [19]
 export function contarCoincidenciasDiccionario(texto: string): number {
   const segmentos = texto.split(/\s+/).filter((s) => s.length > 0)
   let coincidencias = 0
